@@ -1,4 +1,3 @@
-console.log('hello world');
 function Furry() {
   this.x = 0;
   this.y = 0;
@@ -13,6 +12,7 @@ var wholeBoard = document.querySelectorAll('#board div');
 
 
 function Game() {
+  this.score = 0;
   var self=this;
   this.board = wholeBoard;
   this.furry = new Furry();
@@ -28,12 +28,7 @@ function Game() {
   }
   // pokazuje furiego( podmetoda)
   this.showFurry = function() {
-    if ((this.furry.y>9) || (this.furry.y<0)|| (this.furry.x>9) || (this.furry.x<0)){
-      clearInterval(this.idSetInterval);
-    }
     this.board[ this.index(this.furry.x,this.furry.y) ].classList.add('furry');
-    // console.log('x:  '+ this.furry.x + '  y  : '+ this.furry.y);
-    // console.log('x+1:  '+ this.furry.x + '  y+1  : '+ this.furry.y);
   }
 // // pokazuje coin( podmetoda)
   this.showCoin = function () {
@@ -50,8 +45,13 @@ function Game() {
       this.furry.y += 1;
     } else if (this.furry.direction === "up") {
       this.furry.y -= 1;
-  }
+    }
+    this.checkCoinCollision();
+    if ((this.furry.y>9) || (this.furry.y<0)|| (this.furry.x>9) || (this.furry.x<0)){
+    clearInterval(this.idSetInterval);
+  } else {
     this.showFurry();
+  }
   }
   //zaczyna gre
   this.startGame = function () {
@@ -81,7 +81,18 @@ function Game() {
         default: self.furry.direction = 'right;'
       }
   }
-  //koniec gry
+  //czy moneta
+  this.checkCoinCollision  = function() {
+    if (this.furry.x=== this.coin.x && this.furry.y==this.coin.y){
+      this.score += 1;
+      var scoreBoard = document.querySelector('.score');
+      scoreBoard.innerHTML = this.score;
+      var findCoin = document.querySelector('.coin');
+      findCoin.classList.remove('coin');
+      this.coin = new Coin ();
+      this.showCoin();
+    }
+  }
 
 }
 var testGame =  new Game() ;
