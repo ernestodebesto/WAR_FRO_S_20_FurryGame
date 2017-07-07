@@ -65,20 +65,12 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function Furry() {
-  this.x = 0;
-  this.y = 0;
-  this.direction = "right";
-}
 
-function Coin () {
-  this.x= Math.floor(Math.random() * 10);
-  this.y= Math.floor(Math.random() * 10);
-}
+var Coin = __webpack_require__(1);
+var Furry = __webpack_require__(2);
 var wholeBoard = document.querySelectorAll('#board div');
-
 
 function Game() {
   this.score = 0;
@@ -124,6 +116,8 @@ function Game() {
   }
   //zaczyna gre
   this.startGame = function () {
+    testGame.showFurry();
+    testGame.showCoin();
     this.idSetInterval=setInterval(function () {
           self.moveFurry();
         }, 500);
@@ -165,13 +159,34 @@ function Game() {
 
 }
 var testGame =  new Game() ;
-
 testGame.startGame();
-testGame.showFurry();
-testGame.showCoin();
 document.addEventListener('keydown', function(event){
     testGame.turnFurry(event);
 });
+module.exports = Game;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function Coin () {
+  this.x= Math.floor(Math.random() * 10);
+  this.y= Math.floor(Math.random() * 10);
+}
+module.exports=Coin;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+function Furry() {
+  this.x = 0;
+  this.y = 0;
+  this.direction = "right";
+}
+module.exports=Furry;
 
 
 /***/ })

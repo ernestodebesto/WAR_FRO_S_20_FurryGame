@@ -1,15 +1,7 @@
-function Furry() {
-  this.x = 0;
-  this.y = 0;
-  this.direction = "right";
-}
 
-function Coin () {
-  this.x= Math.floor(Math.random() * 10);
-  this.y= Math.floor(Math.random() * 10);
-}
+var Coin = require("./coin.js");
+var Furry = require("./furry.js");
 var wholeBoard = document.querySelectorAll('#board div');
-
 
 function Game() {
   this.score = 0;
@@ -46,12 +38,12 @@ function Game() {
     } else if (this.furry.direction === "up") {
       this.furry.y -= 1;
     }
-    this.checkCoinCollision();
     if ((this.furry.y>9) || (this.furry.y<0)|| (this.furry.x>9) || (this.furry.x<0)){
     clearInterval(this.idSetInterval);
-  } else {
+    } else {
+    this.checkCoinCollision();
     this.showFurry();
-  }
+    }
   }
   //zaczyna gre
   this.startGame = function () {
@@ -98,8 +90,8 @@ function Game() {
 
 }
 var testGame =  new Game() ;
-
 testGame.startGame();
 document.addEventListener('keydown', function(event){
     testGame.turnFurry(event);
 });
+module.exports = Game;
